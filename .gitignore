@@ -1,0 +1,38 @@
+# ─── Node.js ─────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm
+.pnpm-store
+
+# ─── Environment ─────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ─── Build Outputs ───────────────────────
+dist/
+build/
+
+# ─── Uploads ─────────────────────────────
+server/uploads/
+
+# ─── Logs ────────────────────────────────
+logs/
+*.log
+
+# ─── OS ──────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── Editor ──────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ─── Coverage ────────────────────────────
+coverage/
+.nyc_output/
