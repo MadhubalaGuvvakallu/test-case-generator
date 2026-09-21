@@ -138,8 +138,8 @@ melo/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-org/melo.git
-cd melo
+git clone https://github.com/MadhubalaGuvvakallu/test-case-generator.git
+cd test-case-generator
 ```
 
 ### 2. Install backend dependencies
