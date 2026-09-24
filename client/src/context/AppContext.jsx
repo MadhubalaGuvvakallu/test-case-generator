@@ -22,9 +22,13 @@ const initialState = {
   testCases: [],
   loading: false,
   error: null,
+  authUser: JSON.parse(localStorage.getItem('authUser') || 'null'),
+  token: localStorage.getItem('token') || null,
 };
 
 const ACTION = {
+  SET_AUTH: 'SET_AUTH',
+  LOGOUT: 'LOGOUT',
   SET_STEP: 'SET_STEP',
   ADD_MESSAGE: 'ADD_MESSAGE',
   SET_PROJECT: 'SET_PROJECT',
@@ -46,6 +50,10 @@ const ACTION = {
 
 function reducer(state, action) {
   switch (action.type) {
+    case ACTION.SET_AUTH:
+      return { ...state, authUser: action.payload.user, token: action.payload.token };
+    case ACTION.LOGOUT:
+      return { ...state, authUser: null, token: null, ...{ step: STEPS.WELCOME, messages: [], project: null, workflows: [], rules: [], userStories: [], testCases: [] } };
     case ACTION.SET_STEP:
       return { ...state, step: action.payload };
     case ACTION.ADD_MESSAGE:
@@ -197,6 +205,18 @@ export function AppProvider({ children }) {
     []
   );
 
+  const setAuth = useCallback((user, token) => {
+    localStorage.setItem('authUser', JSON.stringify(user));
+    localStorage.setItem('token', token);
+    dispatch({ type: ACTION.SET_AUTH, payload: { user, token } });
+  }, []);
+
+  const logout = useCallback(() => {
+    localStorage.removeItem('authUser');
+    localStorage.removeItem('token');
+    dispatch({ type: ACTION.LOGOUT });
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
@@ -218,6 +238,8 @@ export function AppProvider({ children }) {
         removeTestCases,
         reset,
         loadProject,
+        setAuth,
+        logout,
       }}
     >
       {children}

@@ -5,6 +5,13 @@ const api = axios.create({
   timeout: 120000, // AI calls can take up to 2 min
 });
 
+// Attach JWT token from localStorage to every request
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
 api.interceptors.response.use(
   (res) => res,
   (err) => {
@@ -13,6 +20,13 @@ api.interceptors.response.use(
     return Promise.reject(new Error(message));
   }
 );
+
+// ── Auth ───────────────────────────────────────────────────
+export const registerUser = (name, email, password) =>
+  api.post('/auth/register', { name, email, password }).then((r) => r.data.data);
+
+export const loginUser = (email, password) =>
+  api.post('/auth/login', { email, password }).then((r) => r.data.data);
 
 // ── Projects ──────────────────────────────────────────────
 export const createProject = (name) =>

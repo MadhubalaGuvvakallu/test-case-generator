@@ -8,6 +8,7 @@ const path = require('path');
 const connectDB = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
 
+const authRoutes = require('./routes/auth');
 const projectRoutes = require('./routes/projects');
 const generationRoutes = require('./routes/generation');
 const workflowRoutes = require('./routes/workflows');
@@ -47,6 +48,7 @@ app.use('/uploads', express.static(path.join(process.cwd(), process.env.UPLOAD_D
 app.get('/health', (_req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 
 // API Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/generation', generationRoutes);
 app.use('/api/workflows', workflowRoutes);
